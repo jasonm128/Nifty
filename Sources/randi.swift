@@ -112,8 +112,8 @@ public func randi(_ rows: Int, _ columns: Int, min: Int = 0, max: Int = Int(Int3
     let totalSize = rows * columns
 
     precondition(rows > 0 && columns > 0, "Matrix dimensions must all be positive")
-    precondition(max < 9007199254740992 && max > -9007199254740992, "|Max| must be below 2^53")
-    precondition(min < 9007199254740992 && min > -9007199254740992, "|Min| must be below 2^53")
+    precondition((Int64(max) < 9007199254740992) && (Int64(max) > -9007199254740992), "|Max| must be below 2^53")
+    precondition((Int64(min) < 9007199254740992) && (Int64(min) > -9007199254740992), "|Min| must be below 2^53")
     precondition(max > min, "Max must be greater than min")    
 
     // Note: The weirdness below in computing the range is to deal with potential overflow.
