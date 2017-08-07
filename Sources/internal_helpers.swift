@@ -185,6 +185,8 @@ internal func _formatElement<T>(_ element: T, _ format: NumberFormatter) -> Stri
 
     // convert any numeric type to a double
     let doubleValue: Double?
+// Float80 is only available on x86 processors
+#if (arch(i386) || arch(x86_64))	
     switch element 
     {
         case is Double:  doubleValue = (element as! Double)
@@ -202,6 +204,24 @@ internal func _formatElement<T>(_ element: T, _ format: NumberFormatter) -> Stri
         case is UInt64:  doubleValue = Double(element as! UInt64)
         default:         doubleValue = nil
     }
+#else
+    switch element 
+    {
+        case is Double:  doubleValue = (element as! Double)
+        case is Float:   doubleValue = Double(element as! Float)
+        case is Int:     doubleValue = Double(element as! Int)
+        case is Int8:    doubleValue = Double(element as! Int8)
+        case is Int16:   doubleValue = Double(element as! Int16)
+        case is Int32:   doubleValue = Double(element as! Int32)
+        case is Int64:   doubleValue = Double(element as! Int64)
+        case is UInt:    doubleValue = Double(element as! UInt)
+        case is UInt8:   doubleValue = Double(element as! UInt8)
+        case is UInt16:  doubleValue = Double(element as! UInt16)
+        case is UInt32:  doubleValue = Double(element as! UInt32)
+        case is UInt64:  doubleValue = Double(element as! UInt64)
+        default:         doubleValue = nil
+    }
+#endif
 
     // format numbers and strings differently
     if let el = doubleValue 
